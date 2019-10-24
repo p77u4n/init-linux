@@ -13,14 +13,15 @@ npm install -g neovim
 npm install -g eslint
 npm install -g js-beautify
 npm install -g css-beautify
-apt install ruby && gem install sass
+apt install ruby-full && gem install sass && gem install neovim
 npm install -g remark-cli
 npm install -g import-js
 rm -rf nvim
 
 # install ctags
+sudo apt-get install libjansson-dev
 
-git clone https://github.com/universal-ctags/ctags.git
+git clone https://github.com/universal-ctags/ctags.git --depth=1
 cd ctags
 apt-get install pkg-config
 ./autogen.sh
@@ -31,6 +32,12 @@ cd ..
 rm -rf ctags
 echo "done ctags"
 
-# install ag for fzf search string
+# install ripgrep for denite
+
+apt-get install ripgrep
+
+# install ag for fzf search string:vs
 
 apt-get install silversearcher-ag
+
+
