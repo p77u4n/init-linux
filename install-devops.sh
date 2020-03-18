@@ -39,9 +39,11 @@ apt-get install fish
 
 curl -L https://get.oh-my.fish | fish
 
+omf install spacefish
+
+omf install nvm
 # Install postman
  snap install postman
-
 # Install tmux
 
 apt-get install tmux
@@ -50,7 +52,15 @@ curl https://raw.githubusercontent.com/p77u4n/tmux/master/.tmux.conf > ~/.tmux.c
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# Install nginx
+
+sudo apt-get install nginx
+
 
 # Install git flow
 
 apt-get install git-flow
+
+# Install flameshot
+
+apt-get install flameshot
