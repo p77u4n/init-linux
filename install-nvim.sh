@@ -2,42 +2,36 @@
 
 git clone https://github.com/p77u4n/nvim
 chown -R tuancr ./nvim/
-mkdir -p ~/.config
-mv nvim ~/.config/
-add-apt-repository ppa:neovim-ppa/stable
-apt-get update
-apt-get install neovim
-apt-get install python-dev python-pip python3-dev python3-pip
+mkdir -p /home/tuancr/.config
+mv nvim /home/tuancr/.config/
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt-get update
+sudo apt-get install neovim
+sudo apt-get install python-dev python-pip python3-dev python3-pip
 ln -s $(which python3) /usr/local/bin/python3
 npm install -g neovim
 npm install -g eslint
 npm install -g js-beautify
 npm install -g css-beautify
-apt install ruby-full && gem install sass && gem install neovim
+sudo gem install sass
 npm install -g remark-cli
 npm install -g import-js
 rm -rf nvim
 
 # install ctags
-sudo apt-get install libjansson-dev
 
-git clone https://github.com/universal-ctags/ctags.git --depth=1
+git clone https://github.com/universal-ctags/ctags.git
 cd ctags
-apt-get install pkg-config
+sudo apt-get install pkg-config
 ./autogen.sh
 ./configure --prefix=/usr/local # defaults to /usr/local
 make
-make install # may require extra privileges depending on where to install
+sudo make install # may require extra privileges depending on where to install
 cd ..
 rm -rf ctags
 echo "done ctags"
 
-# install ripgrep for denite
+# install ag for fzf search string
 
-apt-get install ripgrep
-
-# install ag for fzf search string:vs
-
-apt-get install silversearcher-ag
-
-
+sudo apt-get install silversearcher-ag
+sudo apt-get install ripgrep 
