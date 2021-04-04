@@ -11,3 +11,5 @@ gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 apt-get install flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 apt-get install gnome-software-plugin-flatpak
+
+sudo apt install ruby-full

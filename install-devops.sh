@@ -30,20 +30,17 @@ sudo mv docker-cleanup /usr/local/bin/docker-cleanup
 sudo chmod +x /usr/local/bin/docker-cleanup
 
 curl curl -s https://api.github.com/repos/docker/kitematic/releases/latest | grep "browser_download_url.*-Ubuntu.zip" | cut -d : -f 2,3 | tr -d \" | wget -qi -
+# Install zsh
+apt-get install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-# Install Fish Shell
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 
-apt-add-repository ppa:fish-shell/release-3
-apt-get update
-apt-get install fish
+chsh -s $(which zsh)
 
-curl -L https://get.oh-my.fish | fish
-
-omf install spacefish
-
-omf install nvm
 # Install postman
- snap install postman
+snap install postman
 # Install tmux
 
 apt-get install tmux
