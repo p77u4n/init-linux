@@ -2,6 +2,11 @@
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
+
+-- Read the docs: https://www.lunarvim.org/docs/configuration
+-- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
+-- Forum: https://www.reddit.com/r/lunarvim/
+-- Discord: https://discord.com/invite/Xb9B4Ny
 --
 -- lvim is the global options object
 
@@ -14,8 +19,8 @@
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
-lvim.colorscheme = "tokyonight"
-vim.opt.guifont = "firacode"
+lvim.colorscheme = "tokyonight-day"
+vim.opt.guifont = "Insoveka NF"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -103,6 +108,7 @@ lvim.builtin.treesitter.highlight.enable = true
 
 lvim.builtin.treesitter.indent = { enable = true, disable = { "python" } }
 
+
 -- generic LSP settings
 
 -- ---@usage disable automatic installation of servers
@@ -110,13 +116,13 @@ lvim.builtin.treesitter.indent = { enable = true, disable = { "python" } }
 
 -- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
 -- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
--- vim.list_extend(lvim.lsp.override, { "pyright" })
+-- vim.list_extend(lvim.lsp.override, { "pylsp" })
 -- add `pyright` to `skipped_servers` list
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jedi_language_server" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 -- remove `jedi_language_server` from `skipped_servers` list
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "pyright"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+  return server ~= "pylsp"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 local opts = { noremap = true, silent = true } -- check the lspconfig documentation for a list of all possible options
@@ -137,8 +143,8 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { command = "black", filetypes = { "python" } },
-  { command = "isort", filetypes = { "python" } },
+  -- { command = "black", filetypes = { "python" } },
+  -- { command = "isort", filetypes = { "python" } },
   {
     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
     command = "prettier",
@@ -153,7 +159,7 @@ formatters.setup {
 -- -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "flake8", filetypes = { "python" } },
+  -- { command = "flake8", filetypes = { "python" } },
   {
     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
     command = "shellcheck",
@@ -271,19 +277,64 @@ lvim.plugins = {
     dependencies = "nvim-treesitter/nvim-treesitter",
     -- Uncomment next line if you want to follow only stable versions
     -- tag = "*"
-  }, {
-  "windwp/nvim-spectre",
-  event = "BufRead",
-  config = function()
-    require("spectre").setup()
-  end,
-},
+  },
+  {
+    "windwp/nvim-spectre",
+    event = "BufRead",
+    config = function()
+      require("spectre").setup()
+    end,
+  },
   {
     "windwp/nvim-ts-autotag",
     config = function()
       require("nvim-ts-autotag").setup()
     end,
   },
+  {
+    "metakirby5/codi.vim",
+    cmd = "Codi",
+  },
+  {
+    "folke/tokyonight.nvim",
+    config = function()
+      require("tokyonight").setup({
+        -- -- your configuration comes here
+        -- -- or leave it empty to use the default settings
+        style = "day",       -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+        light_style = "day", -- The theme is used when the background is set to light
+        -- transparent = false,    -- Enable this to disable setting the background color
+        -- terminal_colors = true, -- Configure the colors used when opening a `:terminal` in [Neovim](https://github.com/neovim/neovim)
+        styles = {
+          -- Style to be applied to different syntax groups
+          -- Value is any valid attr-list value for `:help nvim_set_hl`
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = {},
+          variables = {},
+          -- Background styles. Can be "dark", "transparent" or "normal"
+          sidebars = "dark", -- style for sidebars, see below
+          floats = "dark",   -- style for floating windows
+        },
+        -- sidebars = { "qf", "help" },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+        -- day_brightness = 0,               -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+        -- hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+        -- dim_inactive = false,             -- dims inactive windows
+        -- lualine_bold = true,              -- When `true`, section headers in the lualine theme will be bold
+
+        -- --- You can override specific color groups to use other groups or a hex color
+        -- --- function will be called with a ColorScheme table
+        -- ---@param colors ColorScheme
+        -- on_colors = function(colors) end,
+
+        -- --- You can override specific highlights to use other groups or a hex color
+        -- --- function will be called with a Highlights and ColorScheme table
+        -- ---@param highlights Highlights
+        -- ---@param colors ColorScheme
+        -- on_highlights = function(highlights, colors) end,
+      })
+    end,
+  }
 }
 
 lvim.keys.normal_mode["gas"] = ":lua require('textcase').current_word('to_snake_case')<CR>"
@@ -294,15 +345,13 @@ lvim.builtin.which_key.mappings["S"] = {
   Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
 }
 
-vim.keymap.set('n', '<leader>Sp', '<cmd>lua require("spectre").open()<CR>', {
-  desc = "Open Spectre"
-})
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = "Search current word"
-})
+lvim.builtin.which_key.mappings["R"] = {
+  name = "Spectre",
+  o = { "<cmd>lua require('spectre').toggle()<CR>", "open spectre" },
+  w = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", "Search current word" },
+  p = { "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", "Search on current file" },
+}
+
 vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
   desc = "Search current word"
-})
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = "Search on current file"
 })
