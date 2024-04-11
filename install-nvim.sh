@@ -13,7 +13,7 @@ ln -s $(which python3) /usr/local/bin/python3
 pip3 install --upgrade msgpack
 pip install msgpack
 npm install -g neovim
-npm install -g eslint
+npm install -g eslint@8.54.0
 npm install -g js-beautify
 npm install -g css-beautify
 npm i -g bash-language-server
