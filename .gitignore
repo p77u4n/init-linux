@@ -1,0 +1,8 @@
+*
+!*/*.sh
+.bashrc
+.zshrc
+config.lua
+node.md
+.gitignore
+.git
